@@ -130,7 +130,7 @@ package car with SPARK_Mode is
    --Due to the Precondition that if the gearSwtich is not to 'Parked' - then the car must first be in parking gear and has been flagged as having enough charge to drive
    procedure ChangeGear (gearSwitch : in GearSettings) with
      Global => (In_Out => myCar),
-     Pre => ((myCar.gear = Driving or myCar.gear = Reversing) and gearSwitch = Parked and myCar.diagnosticMode = Off) or (myCar.gear = Parked and (gearSwitch = Driving or gearSwitch = Reversing) and myCar.permitted and myCar.diagnosticMode = Off and not WarningLightIsOn(SeatbeltUnplugged)),
+     Pre => (myCar.gear /= Parked and gearSwitch = Parked and myCar.diagnosticMode = Off) or (myCar.gear = Parked and gearSwitch /= Parked and myCar.permitted and myCar.diagnosticMode = Off and not WarningLightIsOn(SeatbeltUnplugged)),
      Post => myCar.gear = gearSwitch;
      
      --Pre => myCar.diagnosticMode = Off and ((gearSwitch = Parked and myCar.speed = SpeedRange'First) or (myCar.gear = Parked and myCar.permitted) or (myCar.gear = Driving and myCar.permitted) or (myCar.gear = Reversing and myCar.permitted)),
