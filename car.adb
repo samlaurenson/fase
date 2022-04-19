@@ -50,8 +50,7 @@ package body car with SPARK_Mode is
       --     end if;
       --  end if;
       
-      if (((myCar.gear = Driving or myCar.gear = Reversing) and gearSwitch = Parked and myCar.diagnosticMode = Off) or 
-                                           (myCar.gear = Parked and (gearSwitch = Driving or gearSwitch = Reversing) and myCar.permitted and myCar.diagnosticMode = Off and not WarningLightIsOn(SeatbeltUnplugged))) then
+      if (myCar.gear /= Parked and gearSwitch = Parked and myCar.diagnosticMode = Off) or (myCar.gear = Parked and gearSwitch /= Parked and myCar.permitted and myCar.diagnosticMode = Off and not WarningLightIsOn(SeatbeltUnplugged)) then
          myCar.gear := gearSwitch;
       end if;
    end ChangeGear;
